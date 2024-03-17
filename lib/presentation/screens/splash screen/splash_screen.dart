@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:amruta_ayurveda/cores/device_info.dart';
 import 'package:amruta_ayurveda/presentation/screens/login%20screen/login_screen.dart';
 import 'package:amruta_ayurveda/presentation/screens/register%20screen/screen_add_user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//late SharedPreferences pref;
+late SharedPreferences pref;
 
 class Splash extends StatefulWidget {
   const Splash({
@@ -42,7 +41,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     Future.delayed(Duration(seconds: 2)).then((_) {
-      Navigator.pushNamed(context, SignUpPage.routeName);
+      Navigator.pushReplacementNamed(context, LoginPage.routeName);
     });
   }
 
@@ -53,7 +52,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future<void> initSharedPreferences() async {
-    // pref = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
   }
 
   @override

@@ -2,9 +2,6 @@ String? validateEmail(String? value) {
   if (value == null || value.isEmpty) {
     return 'Please enter an email address.';
   }
-  if (!value.contains("@") || !value.contains('.')) {
-    return 'Not a valid mail';
-  }
 
   return null;
 }
