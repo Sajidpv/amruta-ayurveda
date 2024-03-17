@@ -18,9 +18,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amruta Ayurveda',
-      theme: ThemeData().copyWith(
-        brightness: MediaQuery.of(context).platformBrightness,
-        useMaterial3: false,
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white, foregroundColor: Colors.black),
+        textTheme: TextTheme(
+            bodyMedium: TextStyle(color: Colors.black),
+            bodySmall: TextStyle(color: Colors.black),
+            bodyLarge: TextStyle(color: Colors.black, fontSize: 12)),
+        primaryTextTheme: TextTheme(titleLarge: TextStyle(color: Colors.black)),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(0, 104, 55, 1.000)),
       ),
       onGenerateRoute: Routes.onGenerateRoute,
       initialRoute: Splash.routeName,

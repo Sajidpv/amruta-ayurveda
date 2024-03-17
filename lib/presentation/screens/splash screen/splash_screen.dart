@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:amruta_ayurveda/cores/device_info.dart';
+import 'package:amruta_ayurveda/presentation/screens/login%20screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 //late SharedPreferences pref;
@@ -39,7 +40,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         setState(() {});
       });
     controller.repeat(reverse: true);
-    Future.delayed(Duration(seconds: 5)).then((_) {});
+    Future.delayed(Duration(seconds: 2)).then((_) {
+      Navigator.pushNamed(context, LoginPage.routeName);
+    });
   }
 
   @override
@@ -58,7 +61,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       body: Container(
         width: DeviceInfo(context).height,
         height: DeviceInfo(context).height,
-        child: InkWell(child: Image.asset('assets/splash.png')),
+        child: Image(
+          fit: BoxFit.fill,
+          image: AssetImage('images/splash.png'),
+        ),
       ),
     );
   }
