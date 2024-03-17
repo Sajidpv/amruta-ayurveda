@@ -5,8 +5,11 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
+    this.color,
+    this.textColor,
   });
-
+  final Color? color;
+  final Color? textColor;
   final String label;
   final Function()? onPressed;
   @override
@@ -16,14 +19,17 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromRGBO(0, 104, 55, 1.000),
+              backgroundColor:
+                  color != null ? color : Color.fromRGBO(0, 104, 55, 1.000),
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 17.0),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)))),
           child: Text(
             label,
-            style: TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(
+                color: textColor != null ? textColor : Colors.white,
+                fontSize: 12),
           )),
     );
   }

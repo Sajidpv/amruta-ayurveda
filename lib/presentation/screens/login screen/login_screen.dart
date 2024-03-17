@@ -13,8 +13,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LoginProvider>(context);
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = DeviceInfo(context).width!;
+    double screenHeight = DeviceInfo(context).height!;
 
     return Scaffold(
       body: ListView(
@@ -80,6 +80,8 @@ class LoginPage extends StatelessWidget {
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(fontSize: 10),
                               decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey.shade300,
                                 border: OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(8.0)),
@@ -110,6 +112,8 @@ class LoginPage extends StatelessWidget {
                             autocorrect: false,
                             style: const TextStyle(fontSize: 10),
                             decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey.shade300,
                                 border: OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(8.0)),

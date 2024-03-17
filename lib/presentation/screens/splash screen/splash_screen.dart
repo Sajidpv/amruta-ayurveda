@@ -2,6 +2,7 @@
 
 import 'package:amruta_ayurveda/cores/device_info.dart';
 import 'package:amruta_ayurveda/presentation/screens/login%20screen/login_screen.dart';
+import 'package:amruta_ayurveda/presentation/screens/register%20screen/screen_add_user.dart';
 import 'package:flutter/material.dart';
 
 //late SharedPreferences pref;
@@ -41,7 +42,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     Future.delayed(Duration(seconds: 2)).then((_) {
-      Navigator.pushNamed(context, LoginPage.routeName);
+      Navigator.pushNamed(context, SignUpPage.routeName);
     });
   }
 

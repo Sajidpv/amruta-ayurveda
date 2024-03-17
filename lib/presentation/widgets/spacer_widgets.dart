@@ -8,8 +8,8 @@ class Devider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
-      width: width,
+      height: height != null ? height : 15,
+      width: width != null ? width : 15,
     );
   }
 }

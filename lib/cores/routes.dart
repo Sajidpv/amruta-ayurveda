@@ -1,5 +1,7 @@
 import 'package:amruta_ayurveda/logic/provider/login_provider.dart';
+import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
 import 'package:amruta_ayurveda/presentation/screens/login%20screen/login_screen.dart';
+import 'package:amruta_ayurveda/presentation/screens/register%20screen/screen_add_user.dart';
 import 'package:amruta_ayurveda/presentation/screens/splash%20screen/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +16,11 @@ class Routes {
                 create: (context) => LoginProvider(context),
                 child: const LoginPage()));
 
-      // case SignupScreen.routeName: return CupertinoPageRoute(
-      //   builder: (context) => ChangeNotifierProvider(
-      //     create: (context) => SignupProvider(context),
-      //     child: const SignupScreen()
-      //   )
-      // );
+      case SignUpPage.routeName:
+        return CupertinoPageRoute(
+            builder: (context) => ChangeNotifierProvider(
+                create: (context) => SignUpProvider(context),
+                child: SignUpPage()));
 
       case Splash.routeName:
         return MaterialPageRoute(builder: (context) => const Splash());
