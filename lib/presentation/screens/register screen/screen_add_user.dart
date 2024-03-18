@@ -11,6 +11,7 @@ import 'package:amruta_ayurveda/presentation/widgets/text_box.dart';
 import 'package:amruta_ayurveda/presentation/widgets/text_fields.dart';
 import 'package:amruta_ayurveda/presentation/widgets/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -173,8 +174,10 @@ class SignUpPage extends StatelessWidget {
                         child: providers.treatmentsets.isEmpty
                             ? Center(child: Text('  No treatments added yet! '))
                             : ListView.builder(
+                                shrinkWrap: true,
                                 itemCount: providers.treatmentsets.length,
                                 itemBuilder: (BuildContext context, int index) {
+                                  final item = providers.treatmentsets[index];
                                   return Column(
                                     children: [
                                       Row(
@@ -182,19 +185,27 @@ class SignUpPage extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '  1. Couple Combo package i...',
+                                            item.treatmentName != null
+                                                ? '${index + 1}.  ${item.treatmentName!}'
+                                                : '',
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          CircleAvatar(
+                                          GestureDetector(
+                                            onTap: () {
+                                              provider.removeItem(item);
+                                            },
+                                            child: CircleAvatar(
                                               backgroundColor: Color.fromARGB(
                                                   146, 231, 35, 35),
                                               radius: 13,
                                               child: Icon(
                                                 Icons.close,
                                                 color: Colors.white,
-                                              ))
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
                                       Devider(
@@ -215,8 +226,8 @@ class SignUpPage extends StatelessWidget {
                                                   builder: (context, provider,
                                                       child) {
                                                     return numberBox(
-                                                      text: provider.male
-                                                          .toString(),
+                                                      text:
+                                                          item.male.toString(),
                                                     );
                                                   },
                                                 ),
@@ -234,7 +245,7 @@ class SignUpPage extends StatelessWidget {
                                                   builder: (context, provider,
                                                       child) {
                                                     return numberBox(
-                                                      text: provider.female
+                                                      text: item.female
                                                           .toString(),
                                                     );
                                                   },
@@ -245,8 +256,17 @@ class SignUpPage extends StatelessWidget {
                                           Devider(
                                             width: 20,
                                           ),
-                                          Icon(Icons.edit_outlined)
+                                          GestureDetector(
+                                              onTap: () =>
+                                                  showAddTreatmentDialog(
+                                                      action: 'Edit',
+                                                      context: context,
+                                                      provider: provider),
+                                              child: Icon(Icons.edit_outlined))
                                         ],
+                                      ),
+                                      Devider(
+                                        width: 20,
                                       ),
                                     ],
                                   );
@@ -264,8 +284,8 @@ class SignUpPage extends StatelessWidget {
                               textColor: Colors.black,
                               color: Color.fromRGBO(0, 104, 55, 0.226),
                               label: '+ Add Treatments',
-                              onPressed: () =>
-                                  showAddTreatmentDialog(context: context),
+                              onPressed: () => showAddTreatmentDialog(
+                                  context: context, provider: provider),
                             );
                     }),
                     Devider(

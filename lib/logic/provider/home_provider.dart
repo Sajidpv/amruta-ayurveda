@@ -58,7 +58,7 @@ class HomeProvider with ChangeNotifier {
         startDate = DateTime(now.year, now.month - 1, now.day);
         break;
       default:
-        startDate = DateTime(1900); // Set a default start date
+        startDate = DateTime(2000);
     }
     period == 'All'
         ? filterdData = patientData

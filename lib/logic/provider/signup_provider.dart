@@ -82,6 +82,15 @@ class SignUpProvider with ChangeNotifier {
     }
   }
 
+  void removeItem(item) {
+    int index = treatmentsets
+        .indexWhere((element) => element.treatmentName == item.treatmentName);
+    if (index != -1) {
+      treatmentsets.removeAt(index);
+    }
+    notifyListeners();
+  }
+
   void subCount(val) {
     if (val == 'male') {
       male > 0 ? male-- : null;
@@ -98,8 +107,9 @@ class SignUpProvider with ChangeNotifier {
     treatmentsets.add(PatientdetailsSet(
         male: male.toString(),
         female: female.toString(),
+        treatmentName: selectedTreatment!.name,
         treatment: selectedTreatment!.id));
-    notifyListeners(); // Notify listeners after adding a new treatment set
+    notifyListeners();
     customSnackbar(
         message: '${male + female} Patient added', color: Colors.grey.shade700);
     print('in provider $treatmentsets');
