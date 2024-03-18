@@ -45,6 +45,7 @@ class LoginProvider with ChangeNotifier {
       }
     } catch (e) {
       isLoading = false;
+      print(e.toString());
       notifyListeners();
       customSnackbar(message: 'Error Occured! Check your connection');
     }

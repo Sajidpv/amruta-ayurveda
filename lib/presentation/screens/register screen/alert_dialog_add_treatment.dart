@@ -1,3 +1,4 @@
+import 'package:amruta_ayurveda/cores/device_info.dart';
 import 'package:amruta_ayurveda/data/models/treatment_model.dart';
 import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
 import 'package:amruta_ayurveda/presentation/widgets/primary_button.dart';
@@ -71,11 +72,11 @@ void showAddTreatmentDialog(
                         children: [
                           numberBox(
                             height: 50,
-                            width: 100,
+                            width: DeviceInfo(context).width! / 5,
                             text: 'Male',
                           ),
                           Devider(
-                            width: 40,
+                            width: 30,
                           ),
                           circularButton(
                             onClick: () {
@@ -108,11 +109,11 @@ void showAddTreatmentDialog(
                         children: [
                           numberBox(
                             height: 50,
-                            width: 100,
+                            width: DeviceInfo(context).width! / 5,
                             text: 'Female',
                           ),
                           Devider(
-                            width: 40,
+                            width: 30,
                           ),
                           circularButton(
                             onClick: () {

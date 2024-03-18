@@ -2,7 +2,7 @@ import 'package:amruta_ayurveda/cores/device_info.dart';
 import 'package:amruta_ayurveda/data/models/patient_model.dart';
 import 'package:amruta_ayurveda/logic/provider/home_provider.dart';
 import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
-import 'package:amruta_ayurveda/presentation/screens/register%20screen/alert_dialog_add_category.dart';
+import 'package:amruta_ayurveda/presentation/screens/register%20screen/alert_dialog_add_treatment.dart';
 import 'package:amruta_ayurveda/presentation/widgets/circular_loading_indicator.dart';
 import 'package:amruta_ayurveda/presentation/widgets/notification_icon.dart';
 import 'package:amruta_ayurveda/presentation/widgets/primary_button.dart';
@@ -397,10 +397,10 @@ class SignUpPage extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: TextButton.icon(
+                            child: TextButton(
                               onPressed: () =>
                                   provider.selectDateFunction(context),
-                              label: Text(
+                              child: Text(
                                 provider.selectedDate.toString(),
                                 style: const TextStyle(
                                     fontSize: 10, color: Colors.black),

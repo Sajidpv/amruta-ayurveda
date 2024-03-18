@@ -89,7 +89,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   width: 150,
-                                  height: 50,
+                                  height: 55,
                                   child: DropdownButtonFormField<String>(
                                     hint: Text('Date'),
                                     decoration: InputDecoration(

@@ -35,35 +35,38 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-SizedBox circularButton({
+Padding circularButton({
   required BuildContext context,
   required IconData icon,
   dynamic arguments,
   required VoidCallback onClick,
 }) {
   Color color = Theme.of(context).colorScheme.primary;
-  return SizedBox(
-    width: 56,
-    height: 56,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: onClick,
-          style: ElevatedButton.styleFrom(
-            shape: CircleBorder(),
-            backgroundColor: color,
-            padding: EdgeInsets.all(15),
-          ),
-          child: Center(
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 20,
+  return Padding(
+    padding: const EdgeInsets.all(5.0),
+    child: SizedBox(
+      width: 46,
+      height: 56,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: onClick,
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              backgroundColor: color,
+              padding: EdgeInsets.all(15),
+            ),
+            child: Center(
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
