@@ -16,118 +16,123 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
 
-    print(homeProvider.patientData);
     return Scaffold(
       appBar: AppBar(
         actions: [bellIconWithBadge(homeProvider: homeProvider)],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: DeviceInfo(context).height! / 1.3,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: DeviceInfo(context).width! / 15,
-                        vertical: 10),
-                    child: Column(
-                      children: [
-                        Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: DeviceInfo(context).height! / 1.3,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  homeProvider.refreshData();
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: DeviceInfo(context).width! / 15,
+                            vertical: 10),
+                        child: Column(
                           children: [
-                            Flexible(
-                              flex: 4,
-                              child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                style:
-                                    const TextStyle(fontSize: 10, height: .3),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(8.0),
+                            Row(
+                              children: [
+                                Flexible(
+                                  flex: 4,
+                                  child: TextFormField(
+                                    controller: homeProvider.searchController,
+                                    textInputAction: TextInputAction.next,
+                                    style: const TextStyle(
+                                        fontSize: 10, height: .3),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      hintText: 'Search for treatments',
                                     ),
+                                    onChanged: (value) {},
                                   ),
-                                  hintText: 'Search for treatments',
                                 ),
-                                onChanged: (value) {
-                                  // filteredList = itemList
-                                  //     .where((item) => getTitle(item)
-                                  //         .toLowerCase()
-                                  //         .contains(value.toLowerCase()))
-                                  //     .toList();
-                                  // setState(() {});
-                                },
-                              ),
+                                Devider(
+                                  width: 20,
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: PrimaryButton(
+                                    label: 'Search',
+                                    onPressed: () {
+                                      homeProvider.filterData();
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                             Devider(
-                              width: 20,
+                              height: 35,
                             ),
-                            Flexible(
-                              flex: 2,
-                              child: PrimaryButton(
-                                label: 'Search',
-                                onPressed: () {},
+                            Row(
+                              children: [
+                                Text(
+                                  'Sort by: ',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                            Devider(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: DeviceInfo(context).width,
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: DeviceInfo(context).width! / 22,
+                          vertical: 10,
+                        ),
+                        child: homeProvider.isLoading
+                            ? Circular_Loading_indicator()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  homeProvider.filterdData.isEmpty
+                                      ? Center(child: Text('No data found'))
+                                      : PatientListTile(
+                                          patientData:
+                                              homeProvider.filterdData),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        Devider(
-                          height: 35,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Sort by: ',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-                        Devider(
-                          height: 15,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    width: DeviceInfo(context).width,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: DeviceInfo(context).width! / 22,
-                      vertical: 10,
-                    ),
-                    child: homeProvider.isLoading
-                        ? Circular_Loading_indicator()
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              homeProvider.patientData.isEmpty
-                                  ? Text('No data found')
-                                  : PatientListTile(homeProvider: homeProvider),
-                            ],
-                          ),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: DeviceInfo(context).width! / 22,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: DeviceInfo(context).width! / 22,
+              ),
+              child: PrimaryButton(
+                label: 'Register Now',
+                onPressed: () {
+                  Navigator.pushNamed(context, SignUpPage.routeName);
+                },
+              ),
             ),
-            child: PrimaryButton(
-              label: 'Register Now',
-              onPressed: () {
-                Navigator.pushNamed(context, SignUpPage.routeName);
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

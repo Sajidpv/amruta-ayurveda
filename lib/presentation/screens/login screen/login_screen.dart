@@ -23,6 +23,7 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.center,
               child: Stack(children: [
                 Image(
+                    width: screenWidth,
                     fit: BoxFit.fill,
                     image: AssetImage('images/login-background.png')),
                 Positioned.fill(
@@ -44,7 +45,7 @@ class LoginPage extends StatelessWidget {
               decoration: BoxDecoration(),
               height: screenHeight * 0.75,
               width: screenWidth,
-              padding: EdgeInsets.symmetric(horizontal: screenWidth / 15),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth / 20),
               child: Form(
                 key: provider.formKey,
                 child: SingleChildScrollView(
@@ -150,7 +151,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       Text(
                         textAlign: TextAlign.center,
-                        'By creating or logging into an account you are agreeing with our Terms and Condiions and Privacy Policy',
+                        'By creating or logging into an account you are agreeing with our Terms and Conditions and Privacy Policy',
                         style: TextStyle(
                             color: Colors.grey.shade600,
                             fontWeight: FontWeight.w500,

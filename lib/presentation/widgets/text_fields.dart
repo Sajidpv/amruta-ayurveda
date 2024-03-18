@@ -11,7 +11,6 @@ class DefaultTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.suffix,
     this.onTap,
-    this.islabel,
     this.textInputAction = TextInputAction.next,
   });
 
@@ -21,7 +20,7 @@ class DefaultTextFormField extends StatelessWidget {
   final String? label;
   final TextInputType? textInputType;
   final bool readOnly;
-  final bool? islabel;
+
   final IconData? suffix;
   final TextInputAction? textInputAction;
 
@@ -49,11 +48,8 @@ class DefaultTextFormField extends StatelessWidget {
           filled: true,
           fillColor: Colors.grey.shade300,
           border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
               borderRadius: BorderRadius.all(Radius.circular(8))),
-          label: Text(
-            islabel == true ? label! : '',
-            style: TextStyle(color: Colors.black),
-          ),
           hintText: label != null
               ? readOnly
                   ? label

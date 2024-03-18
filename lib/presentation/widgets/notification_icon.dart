@@ -12,9 +12,7 @@ class bellIconWithBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        homeProvider.getPatients();
-      },
+      onPressed: () {},
       icon: Stack(children: [
         Icon(
           Icons.notifications_none_outlined,

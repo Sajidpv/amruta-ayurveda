@@ -1,31 +1,31 @@
 import 'package:amruta_ayurveda/cores/device_info.dart';
-import 'package:amruta_ayurveda/logic/provider/home_provider.dart';
+import 'package:amruta_ayurveda/data/models/patient_model.dart';
 import 'package:amruta_ayurveda/presentation/widgets/spacer_widgets.dart';
 import 'package:flutter/material.dart';
 
 class PatientListTile extends StatelessWidget {
   const PatientListTile({
     super.key,
-    required this.homeProvider,
+    required this.patientData,
   });
 
-  final HomeProvider homeProvider;
+  final List<Patient> patientData;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: homeProvider.patientData.length,
+      itemCount: patientData.length,
       itemBuilder: (context, index) {
-        print(homeProvider.patientData[index]);
+        print(patientData[index]);
         return Card(
           elevation: 0,
           color: const Color.fromRGBO(238, 238, 238, 1),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -42,7 +42,7 @@ class PatientListTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              homeProvider.patientData[index].name!,
+                              patientData[index].name!,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14),
                             ),
@@ -50,7 +50,7 @@ class PatientListTile extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              homeProvider.patientData[index].address!,
+                              patientData[index].address!,
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 14),
@@ -70,11 +70,8 @@ class PatientListTile extends StatelessWidget {
                                       width: 5,
                                     ),
                                     Text(
-                                      homeProvider.patientData[index]
-                                                  .dateNdTime !=
-                                              null
-                                          ? homeProvider
-                                              .patientData[index].dateNdTime!
+                                      patientData[index].dateNdTime != null
+                                          ? patientData[index].dateNdTime!
                                           : '',
                                       style: TextStyle(fontSize: 14),
                                     ),
@@ -93,7 +90,7 @@ class PatientListTile extends StatelessWidget {
                                       width: 5,
                                     ),
                                     Text(
-                                      homeProvider.patientData[index].payment!,
+                                      patientData[index].payment!,
                                       style: TextStyle(fontSize: 14),
                                     ),
                                   ],
@@ -112,8 +109,9 @@ class PatientListTile extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 12, right: 12, bottom: 12, top: 5),
+                    left: 20, right: 20, bottom: 12, top: 5),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'View Booking details',

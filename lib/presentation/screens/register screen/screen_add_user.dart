@@ -1,15 +1,17 @@
 import 'package:amruta_ayurveda/cores/device_info.dart';
+import 'package:amruta_ayurveda/data/models/branch_model.dart';
 import 'package:amruta_ayurveda/logic/provider/home_provider.dart';
 import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
-import 'package:amruta_ayurveda/presentation/screens/home%20screen/home_screen.dart';
 import 'package:amruta_ayurveda/presentation/screens/register%20screen/alert_dialog_add_category.dart';
 import 'package:amruta_ayurveda/presentation/widgets/circular_loading_indicator.dart';
 import 'package:amruta_ayurveda/presentation/widgets/notification_icon.dart';
 import 'package:amruta_ayurveda/presentation/widgets/primary_button.dart';
 import 'package:amruta_ayurveda/presentation/widgets/spacer_widgets.dart';
+import 'package:amruta_ayurveda/presentation/widgets/text_box.dart';
 import 'package:amruta_ayurveda/presentation/widgets/text_fields.dart';
 import 'package:amruta_ayurveda/presentation/widgets/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -23,19 +25,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool isOwner = false, isAdmin = false;
-
-  int _groupValue = 0;
-  String selectedHour = '';
-
-  void _changed(int? value) {
-    if (value != null) {
-      setState(() {
-        _groupValue = value;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SignUpProvider>(context, listen: false);
@@ -109,42 +98,71 @@ class _SignUpPageState extends State<SignUpPage> {
                     Devider(
                       height: 15,
                     ),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Text('  Location'),
-                    //     Devider(
-                    //       height: 5,
-                    //     ),
-                    //     SizedBox(
-                    //       height: 55,
-                    //       child: DropdownButtonFormField(
-                    //         decoration: const InputDecoration(
-                    //           hintText: 'Choose your location',
-                    //           border: OutlineInputBorder(
-                    //             borderRadius:
-                    //                 const BorderRadius.all(Radius.circular(8.0)),
-                    //           ),
-                    //         ),
-                    //         value: provider.jobType,
-                    //         items: JobType.values.map((e) {
-                    //           return DropdownMenuItem<JobType>(
-                    //             value: e,
-                    //             child: Text(
-                    //               e.name.toString(),
-                    //               style: const TextStyle(fontSize: 10),
-                    //             ),
-                    //           );
-                    //         }).toList(),
-                    //         onChanged: (e) {
-                    //           provider.jobTypes(e);
-                    //         },
-                    //         autovalidateMode: AutovalidateMode.onUserInteraction,
-                    //         validator: validateDropdown,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                    Text('  Location'),
+                    Devider(
+                      height: 5,
+                    ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Choose your Location',
+                        hintStyle: const TextStyle(fontSize: 10),
+                        filled: true,
+                        fillColor: Colors.grey.shade300,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                      ),
+                      value: provider.selectedLocation,
+                      items: provider.locations.map((e) {
+                        return DropdownMenuItem<String>(
+                          value: e,
+                          child: Text(
+                            e.toString(),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (e) {
+                        provider.selectedLocation = e;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: validateDropdown,
+                    ),
+                    Devider(
+                      height: 15,
+                    ),
+                    Text('  Branch'),
+                    Devider(
+                      height: 5,
+                    ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Select the branch',
+                        hintStyle: const TextStyle(fontSize: 10),
+                        filled: true,
+                        fillColor: Colors.grey.shade300,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                      ),
+                      value: provider.branch,
+                      items: provider.branches.map((e) {
+                        return DropdownMenuItem<Branchess>(
+                          value: e,
+                          child: Text(
+                            e.name.toString(),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (e) {
+                        provider.branch = e;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: validateDropdown,
+                    ),
                     Devider(
                       height: 15,
                     ),
@@ -190,15 +208,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Row(
                                   children: [
                                     Text('Male  '),
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 30,
-                                        child: DefaultTextFormField(
-                                          textController:
-                                              provider.nameController,
-                                          validator: validaterMandatory,
-                                        ),
-                                      ),
+                                    Consumer<SignUpProvider>(
+                                      builder: (context, provider, child) {
+                                        return numberBox(
+                                          text: provider.male.toString(),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -210,15 +225,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Row(
                                   children: [
                                     Text('Female  '),
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 30,
-                                        child: DefaultTextFormField(
-                                          textController:
-                                              provider.nameController,
-                                          validator: validaterMandatory,
-                                        ),
-                                      ),
+                                    Consumer<SignUpProvider>(
+                                      builder: (context, provider, child) {
+                                        return numberBox(
+                                          text: provider.female.toString(),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -243,8 +255,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               textColor: Colors.black,
                               color: Color.fromRGBO(0, 104, 55, 0.226),
                               label: '+ Add Treatments',
-                              onPressed: () => AddTreatment(
-                                  context: context, provider: provider),
+                              onPressed: () => showAddTreatmentDialog(
+                                  context: context, providers: provider),
                             );
                     }),
                     Devider(
@@ -273,48 +285,53 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 15,
                     ),
                     Text('  Payment Options'),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Radio(
-                              groupValue: _groupValue,
-                              onChanged: (value) => _changed(value),
-                              value: 0,
-                            ),
-                            Text('Cash',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                              groupValue: _groupValue,
-                              onChanged: (value) => _changed(value),
-                              value: 1,
-                            ),
-                            Text('Card',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                              groupValue: _groupValue,
-                              onChanged: (value) => _changed(value),
-                              value: 2,
-                            ),
-                            Text('UPI',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ],
-                    ),
+                    Consumer<SignUpProvider>(
+                        builder: (context, provider, child) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Radio(
+                                groupValue: provider.groupValue,
+                                onChanged: (value) => provider.changed(value),
+                                value: 0,
+                              ),
+                              Text('Cash',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                groupValue: provider.groupValue,
+                                onChanged: (value) => provider.changed(value),
+                                value: 1,
+                              ),
+                              Text('Card',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                groupValue: provider.groupValue,
+                                onChanged: (value) => provider.changed(value),
+                                value: 2,
+                              ),
+                              Text('UPI',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                        ],
+                      );
+                    }),
                     Text('  Advance Amount'),
                     Devider(
                       height: 5,
@@ -334,7 +351,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       textController: provider.nameController,
                       validator: validaterMandatory,
                     ),
-
                     Devider(
                       height: 15,
                     ),
@@ -350,11 +366,74 @@ class _SignUpPageState extends State<SignUpPage> {
                         validator: validaterMandatory,
                       ),
                     ),
-
+                    Devider(
+                      height: 15,
+                    ),
+                    Text('  Treatment Time'),
+                    Devider(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey.shade300,
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                                hintText: 'Select Hour'),
+                            value: provider.selectedHour,
+                            onChanged: (newValue) {
+                              setState(() {
+                                provider.selectedHour = newValue!;
+                              });
+                            },
+                            items: provider.hours.map((hour) {
+                              return DropdownMenuItem<String>(
+                                value: hour,
+                                child: Text(
+                                  hour,
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Devider(
+                          width: 15,
+                        ),
+                        Flexible(
+                          child: DropdownButtonFormField<String>(
+                              value: provider.selectedMinuts,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  provider.selectedMinuts = newValue!;
+                                });
+                              },
+                              items: provider.minutes.map((minut) {
+                                return DropdownMenuItem<String>(
+                                  value: minut,
+                                  child: Text(
+                                    minut,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                );
+                              }).toList(),
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8))),
+                                  hintText: 'Select Minut')),
+                        ),
+                      ],
+                    ),
                     Devider(
                       height: 35,
                     ),
-
                     Consumer<SignUpProvider>(
                         builder: (context, provider, child) {
                       return provider.isLoading

@@ -10,8 +10,8 @@ String? validatePassword(String? value) {
   if (value == null || value.isEmpty) {
     return 'Enter a password.';
   }
-  if (value.length < 6) {
-    return 'Minimum 6 Charecters required';
+  if (value.length < 8) {
+    return 'Minimum 8 Charecters required';
   }
 
   return null;
