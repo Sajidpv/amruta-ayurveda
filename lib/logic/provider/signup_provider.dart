@@ -8,6 +8,8 @@ class SignUpProvider with ChangeNotifier {
   bool isLoading = false, isObscure = true, isAssigned = false;
 
   final formKey = GlobalKey<FormState>();
+
+  final formKeyDialog = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final mailController = TextEditingController();
   final mobileController = TextEditingController();
@@ -16,9 +18,9 @@ class SignUpProvider with ChangeNotifier {
   final salaryController = TextEditingController();
   final workingMonthController = TextEditingController();
   final workingDayController = TextEditingController();
-  final bNameController = TextEditingController();
-  final ifscController = TextEditingController();
-  final accountController = TextEditingController();
+  final femaleController = TextEditingController();
+  final maeController = TextEditingController();
+  final treatmentController = TextEditingController();
 
   String password = '', action = '', eId = '';
   StreamSubscription? _userSubscription;
@@ -34,9 +36,6 @@ class SignUpProvider with ChangeNotifier {
     final empName = nameController.text;
     final empMail = mailController.text;
     final empPass = passController.text;
-    final bank = bNameController.text;
-    final ifsc = ifscController.text;
-    final accNo = double.tryParse(accountController.text) ?? 0;
     final panNo = panController.text;
     final mobile = mobileController.text;
     final amount = double.tryParse(salaryController.text) ?? 0;
@@ -74,9 +73,7 @@ class SignUpProvider with ChangeNotifier {
     salaryController.dispose();
     workingDayController.dispose();
     workingMonthController.dispose();
-    bNameController.dispose();
-    accountController.dispose();
-    ifscController.dispose();
+
     super.dispose();
   }
 }

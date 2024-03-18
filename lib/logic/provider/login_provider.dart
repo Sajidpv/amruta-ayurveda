@@ -1,8 +1,9 @@
 import 'package:amruta_ayurveda/data/models/login_model.dart';
 import 'package:amruta_ayurveda/data/repository/user_repository.dart';
-import 'package:amruta_ayurveda/presentation/screens/register%20screen/screen_add_user.dart';
+import 'package:amruta_ayurveda/presentation/screens/home%20screen/home_screen.dart';
 import 'package:amruta_ayurveda/presentation/screens/splash%20screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginProvider with ChangeNotifier {
   final BuildContext context;
@@ -33,10 +34,21 @@ class LoginProvider with ChangeNotifier {
     if (res.status == true) {
       isLoading = false;
       pref.setString('token', res.token!);
-      Navigator.pushReplacementNamed(context, SignUpPage.routeName);
+      Navigator.pushReplacementNamed(context, HomePage.routeName);
       notifyListeners();
     } else {
       isLoading = false;
+      Get.rawSnackbar(
+        messageText: Text(
+          res.message!,
+          style: TextStyle(color: Colors.white, fontSize: 14),
+        ),
+        isDismissible: false,
+        duration: const Duration(milliseconds: 2000),
+        backgroundColor: Colors.red[400]!,
+        margin: EdgeInsets.zero,
+        snackStyle: SnackStyle.GROUNDED,
+      );
       notifyListeners();
     }
   }

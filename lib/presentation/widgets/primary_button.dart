@@ -34,3 +34,41 @@ class PrimaryButton extends StatelessWidget {
     );
   }
 }
+
+SizedBox circularButton({
+  required BuildContext context,
+  required IconData icon,
+  String? onPressed,
+  dynamic arguments,
+  VoidCallback? onClick,
+}) {
+  Color color = Theme.of(context).colorScheme.primary;
+  return SizedBox(
+    width: 56,
+    height: 56,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: onPressed != null
+              ? () {
+                  Navigator.pushNamed(context, onPressed);
+                }
+              : onClick,
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            backgroundColor: color,
+            padding: EdgeInsets.all(15),
+          ),
+          child: Center(
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}

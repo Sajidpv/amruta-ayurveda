@@ -1,20 +1,22 @@
 import 'package:amruta_ayurveda/cores/device_info.dart';
+import 'package:amruta_ayurveda/logic/provider/home_provider.dart';
 import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
+import 'package:amruta_ayurveda/presentation/screens/home%20screen/home_screen.dart';
+import 'package:amruta_ayurveda/presentation/screens/register%20screen/alert_dialog_add_category.dart';
 import 'package:amruta_ayurveda/presentation/widgets/circular_loading_indicator.dart';
+import 'package:amruta_ayurveda/presentation/widgets/notification_icon.dart';
 import 'package:amruta_ayurveda/presentation/widgets/primary_button.dart';
 import 'package:amruta_ayurveda/presentation/widgets/spacer_widgets.dart';
 import 'package:amruta_ayurveda/presentation/widgets/text_fields.dart';
 import 'package:amruta_ayurveda/presentation/widgets/validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({
     Key? key,
   }) : super(key: key);
-  static const String routeName = 'createEmploy';
+  static const String routeName = 'create-patient';
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -41,12 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications_none_outlined,
-                size: 30,
-              ))
+          bellIconWithBadge(homeProvider: Provider.of<HomeProvider>(context))
         ],
       ),
       body: SingleChildScrollView(
@@ -246,7 +243,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               textColor: Colors.black,
                               color: Color.fromRGBO(0, 104, 55, 0.226),
                               label: '+ Add Treatments',
-                              onPressed: provider.createUser,
+                              onPressed: () => AddTreatment(
+                                  context: context, provider: provider),
                             );
                     }),
                     Devider(

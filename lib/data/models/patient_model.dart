@@ -12,7 +12,7 @@ class Patient {
   int? discountAmount;
   int? advanceAmount;
   int? balanceAmount;
-  Null? dateNdTime;
+  String? dateNdTime;
   bool? isActive;
   String? createdAt;
   String? updatedAt;
