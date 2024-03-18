@@ -43,19 +43,4 @@ class NetworkController extends GetxController {
       }
     }
   }
-
-  Future<bool> waitForConnectivity() async {
-    final Completer<bool> completer = Completer<bool>();
-
-    void connectivitySubscription(ConnectivityResult connectivityResult) {
-      if (connectivityResult != ConnectivityResult.none) {
-        completer.complete(true);
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-      }
-    }
-
-    _connectivity.onConnectivityChanged.listen(connectivitySubscription);
-
-    return completer.future;
-  }
 }

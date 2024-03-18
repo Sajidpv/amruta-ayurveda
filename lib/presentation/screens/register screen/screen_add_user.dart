@@ -11,7 +11,6 @@ import 'package:amruta_ayurveda/presentation/widgets/text_box.dart';
 import 'package:amruta_ayurveda/presentation/widgets/text_fields.dart';
 import 'package:amruta_ayurveda/presentation/widgets/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {

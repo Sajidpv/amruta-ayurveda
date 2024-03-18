@@ -7,7 +7,7 @@ class Patient {
   String? name;
   String? phone;
   String? address;
-  Null? price;
+  Null price;
   int? totalAmount;
   int? discountAmount;
   int? advanceAmount;

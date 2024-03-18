@@ -161,7 +161,7 @@ void showAddTreatmentDialog(
                 if (provider.formKeyDialog.currentState!.validate()) {
                   if (provider.male < 1 && provider.female < 1) {
                     provider.isError = true;
-                    provider.notifyListeners();
+                    // provider.notifyListeners();
                   } else {
                     provider.addTreatmentset();
                     Navigator.pop(context);

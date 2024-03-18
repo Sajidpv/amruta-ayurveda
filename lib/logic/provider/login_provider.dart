@@ -21,6 +21,7 @@ class LoginProvider with ChangeNotifier {
   }
 
   final UserRepository _userRepository = UserRepository();
+
   void logIn() async {
     try {
       if (!formKey.currentState!.validate()) return;

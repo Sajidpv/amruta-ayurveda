@@ -24,7 +24,6 @@ class SignUpProvider with ChangeNotifier {
   final advancedController = TextEditingController();
   final balanceController = TextEditingController();
 
-  String password = '', action = '', eId = '';
   List<Treatments> treatments = [];
   List<PatientdetailsSet> treatmentsets = [];
   String selectedDate = '';
@@ -56,7 +55,7 @@ class SignUpProvider with ChangeNotifier {
   String selectedHour = '', selectedMinuts = '';
   Branch? branch;
   Treatments? selectedTreatment;
-  int male = 0, female = 0;
+  int male = 1, female = 0;
 
   void _initialize() {
     getBranches();
@@ -151,42 +150,35 @@ class SignUpProvider with ChangeNotifier {
         : groupValue == 1
             ? 'Card'
             : 'UPI';
+
+    List<int> treatmentIds = treatmentsets
+        .map((patientDetailsSet) => patientDetailsSet.treatment!)
+        .toList();
+    List<String> males = treatmentsets
+        .map((patientDetailsSet) => patientDetailsSet.male!)
+        .toList();
+    List<String> females = treatmentsets
+        .map((patientDetailsSet) => patientDetailsSet.female!)
+        .toList();
     Map<String, dynamic> formData = {
       'name': name,
-      'excecutive': '',
+      'excecutive': 'dsgg',
       'payment': payment,
       'phone': whatsapp,
       'address': address,
-      'totalAmount': total,
-      'discountAmount': discount,
-      'advanceAmount': advance,
-      'balanceAmount': balance,
+      'totalAmount': totalController.text,
+      'discountAmount': discountController.text,
+      'advanceAmount': advancedController.text,
+      'balanceAmount': balanceController.text,
       'dateNdTime': selectedDate,
       'id': '',
-      'male': [1, 2, 3],
-      'female': [1, 2, 3],
-      'treatments': [2, 3, 4]
+      'male': 'male',
+      'female': 'female',
+      'branch': ' branch',
+      'treatments': 'treatmentId'
     };
 
     await _homeRepository.registerPatients(formData);
-  }
-
-  Map<String, dynamic> patientToFormData(Patient eData) {
-    try {
-      return {
-        'name': eData.name,
-        'patientdetailsSet': eData.patientdetailsSet!
-            .map((patientSet) => {
-                  'male': 11,
-                  'female': 11,
-                  'treatment': 1131,
-                })
-            .toList(),
-      };
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
   }
 
   void getTreatments() async {

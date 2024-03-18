@@ -37,7 +37,7 @@ class login {
 
 class UserDetails {
   int? id;
-  Null? lastLogin;
+  Null lastLogin;
   String? name;
   String? phone;
   String? address;
@@ -50,7 +50,7 @@ class UserDetails {
   bool? isActive;
   String? createdAt;
   String? updatedAt;
-  Null? branch;
+  Null branch;
 
   UserDetails(
       {this.id,

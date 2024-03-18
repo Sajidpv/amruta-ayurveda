@@ -12,7 +12,6 @@ class HomeProvider with ChangeNotifier {
   List<Patient> filterdData = [];
 
   final searchController = TextEditingController();
-  final dateController = TextEditingController();
 
   final HomeRepository _homeRepository = HomeRepository();
   void _initialize() {
@@ -76,6 +75,7 @@ class HomeProvider with ChangeNotifier {
 
   @override
   void dispose() {
+    searchController.dispose();
     super.dispose();
   }
 }
