@@ -1,6 +1,6 @@
 
 Ayurveda Hospital App
-Welcome to the Ayurveda Hospital App.
+
 
 Features
 Login:
