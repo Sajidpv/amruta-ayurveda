@@ -41,6 +41,39 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void sortData(String period) {
+    DateTime now = DateTime.now();
+    DateTime startDate;
+    switch (period) {
+      case 'All':
+        startDate = DateTime(now.year, now.month, now.day);
+        break;
+      case 'Today':
+        startDate = DateTime(now.year, now.month, now.day);
+        break;
+      case 'Last Week':
+        startDate = now.subtract(Duration(days: now.weekday));
+        break;
+      case 'Last Month':
+        startDate = DateTime(now.year, now.month - 1, now.day);
+        break;
+      default:
+        startDate = DateTime(1900); // Set a default start date
+    }
+    period == 'All'
+        ? filterdData = patientData
+        : filterdData = patientData.where((patient) {
+            DateTime patientDate = patient.dateNdTime != null
+                ? DateTime.parse(patient.dateNdTime!)
+                : DateTime.now();
+            return patientDate.isAfter(startDate) &&
+                patientDate
+                    .isBefore(DateTime(now.year, now.month, now.day + 1));
+          }).toList();
+
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     super.dispose();

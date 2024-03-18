@@ -46,7 +46,7 @@ class DefaultTextFormField extends StatelessWidget {
       },
       decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey.shade300,
+          fillColor: Colors.grey.shade100,
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red),
               borderRadius: BorderRadius.all(Radius.circular(8))),

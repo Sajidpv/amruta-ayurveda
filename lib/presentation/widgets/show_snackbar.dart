@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-SnackbarController customSnackbar({required String message}) {
-  // Function name should be defined
+SnackbarController customSnackbar({Color? color, required String message}) {
   return Get.rawSnackbar(
     messageText: Text(
       message,
@@ -10,7 +9,7 @@ SnackbarController customSnackbar({required String message}) {
     ),
     isDismissible: false,
     duration: const Duration(milliseconds: 2000),
-    backgroundColor: Colors.red[400]!,
+    backgroundColor: color != null ? color : Colors.red[400]!,
     margin: EdgeInsets.zero,
     snackStyle: SnackStyle.GROUNDED,
   );

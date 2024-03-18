@@ -1,5 +1,5 @@
 import 'package:amruta_ayurveda/cores/device_info.dart';
-import 'package:amruta_ayurveda/data/models/branch_model.dart';
+import 'package:amruta_ayurveda/data/models/patient_model.dart';
 import 'package:amruta_ayurveda/logic/provider/home_provider.dart';
 import 'package:amruta_ayurveda/logic/provider/signup_provider.dart';
 import 'package:amruta_ayurveda/presentation/screens/register%20screen/alert_dialog_add_category.dart';
@@ -11,24 +11,17 @@ import 'package:amruta_ayurveda/presentation/widgets/text_box.dart';
 import 'package:amruta_ayurveda/presentation/widgets/text_fields.dart';
 import 'package:amruta_ayurveda/presentation/widgets/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends StatelessWidget {
   SignUpPage({
     Key? key,
   }) : super(key: key);
   static const String routeName = 'create-patient';
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SignUpProvider>(context, listen: false);
-
+    final provider = Provider.of<SignUpProvider>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -48,14 +41,13 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             Container(
-              width: DeviceInfo(context)
-                  .width, // Adjust the width of the line as needed
-              height: 1, // Set the height to fill the available vertical space
-              color: Colors.grey, // Set the color of the line
+              width: DeviceInfo(context).width,
+              height: 1,
+              color: Colors.grey,
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: DeviceInfo(context).width! / 15, vertical: 20),
+                  horizontal: DeviceInfo(context).width! / 20, vertical: 20),
               child: Form(
                 key: provider.formKey,
                 child: Column(
@@ -79,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     DefaultTextFormField(
                       textInputType: TextInputType.number,
-                      textController: provider.nameController,
+                      textController: provider.whatsappController,
                       label: 'WhatsApp number',
                       validator: validaterMandatory,
                     ),
@@ -91,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 5,
                     ),
                     DefaultTextFormField(
-                      textController: provider.nameController,
+                      textController: provider.addressController,
                       label: 'full address',
                       validator: validaterMandatory,
                     ),
@@ -107,7 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Choose your Location',
                         hintStyle: const TextStyle(fontSize: 10),
                         filled: true,
-                        fillColor: Colors.grey.shade300,
+                        fillColor: Colors.grey.shade200,
                         border: OutlineInputBorder(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8.0)),
@@ -141,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Select the branch',
                         hintStyle: const TextStyle(fontSize: 10),
                         filled: true,
-                        fillColor: Colors.grey.shade300,
+                        fillColor: Colors.grey.shade200,
                         border: OutlineInputBorder(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8.0)),
@@ -149,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       value: provider.branch,
                       items: provider.branches.map((e) {
-                        return DropdownMenuItem<Branchess>(
+                        return DropdownMenuItem<Branch>(
                           value: e,
                           child: Text(
                             e.name.toString(),
@@ -170,80 +162,97 @@ class _SignUpPageState extends State<SignUpPage> {
                     Devider(
                       height: 5,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '  1. Couple Combo package i...',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              CircleAvatar(
-                                  backgroundColor:
-                                      Color.fromARGB(146, 231, 35, 35),
-                                  radius: 13,
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ))
-                            ],
-                          ),
-                          Devider(
-                            height: 5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Devider(
-                                width: 25,
-                              ),
-                              Flexible(
-                                child: Row(
-                                  children: [
-                                    Text('Male  '),
-                                    Consumer<SignUpProvider>(
-                                      builder: (context, provider, child) {
-                                        return numberBox(
-                                          text: provider.male.toString(),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Devider(
-                                width: 50,
-                              ),
-                              Flexible(
-                                child: Row(
-                                  children: [
-                                    Text('Female  '),
-                                    Consumer<SignUpProvider>(
-                                      builder: (context, provider, child) {
-                                        return numberBox(
-                                          text: provider.female.toString(),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Devider(
-                                width: 20,
-                              ),
-                              Icon(Icons.edit_outlined)
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    Consumer<SignUpProvider>(
+                        builder: (context, providers, child) {
+                      print('in page: ${provider.treatmentsets}');
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: providers.treatmentsets.isEmpty
+                            ? Center(child: Text('  No treatments added yet! '))
+                            : ListView.builder(
+                                itemCount: providers.treatmentsets.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '  1. Couple Combo package i...',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          CircleAvatar(
+                                              backgroundColor: Color.fromARGB(
+                                                  146, 231, 35, 35),
+                                              radius: 13,
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ))
+                                        ],
+                                      ),
+                                      Devider(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Devider(
+                                            width: 25,
+                                          ),
+                                          Flexible(
+                                            child: Row(
+                                              children: [
+                                                Text('Male  '),
+                                                Consumer<SignUpProvider>(
+                                                  builder: (context, provider,
+                                                      child) {
+                                                    return numberBox(
+                                                      text: provider.male
+                                                          .toString(),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Devider(
+                                            width: 50,
+                                          ),
+                                          Flexible(
+                                            child: Row(
+                                              children: [
+                                                Text('Female  '),
+                                                Consumer<SignUpProvider>(
+                                                  builder: (context, provider,
+                                                      child) {
+                                                    return numberBox(
+                                                      text: provider.female
+                                                          .toString(),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Devider(
+                                            width: 20,
+                                          ),
+                                          Icon(Icons.edit_outlined)
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }),
+                      );
+                    }),
                     Devider(
                       height: 15,
                     ),
@@ -255,8 +264,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               textColor: Colors.black,
                               color: Color.fromRGBO(0, 104, 55, 0.226),
                               label: '+ Add Treatments',
-                              onPressed: () => showAddTreatmentDialog(
-                                  context: context, providers: provider),
+                              onPressed: () =>
+                                  showAddTreatmentDialog(context: context),
                             );
                     }),
                     Devider(
@@ -267,7 +276,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 5,
                     ),
                     DefaultTextFormField(
-                      textController: provider.nameController,
+                      textController: provider.totalController,
                       validator: validaterMandatory,
                     ),
                     Devider(
@@ -278,7 +287,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 5,
                     ),
                     DefaultTextFormField(
-                      textController: provider.nameController,
+                      textController: provider.discountController,
                       validator: validaterMandatory,
                     ),
                     Devider(
@@ -337,7 +346,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 5,
                     ),
                     DefaultTextFormField(
-                      textController: provider.nameController,
+                      textController: provider.advancedController,
                       validator: validaterMandatory,
                     ),
                     Devider(
@@ -348,7 +357,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 5,
                     ),
                     DefaultTextFormField(
-                      textController: provider.nameController,
+                      textController: provider.balanceController,
                       validator: validaterMandatory,
                     ),
                     Devider(
@@ -358,12 +367,37 @@ class _SignUpPageState extends State<SignUpPage> {
                     Devider(
                       height: 5,
                     ),
-                    SizedBox(
-                      height: 50,
-                      child: DefaultTextFormField(
-                        suffix: Icons.date_range_rounded,
-                        textController: provider.nameController,
-                        validator: validaterMandatory,
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextButton.icon(
+                              onPressed: () =>
+                                  provider.selectDateFunction(context),
+                              label: Text(
+                                provider.selectedDate.toString(),
+                                style: const TextStyle(
+                                    fontSize: 10, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.arrow_drop_down_rounded,
+                                color: Theme.of(context).primaryColor,
+                              )),
+                          Devider(
+                            width: 10,
+                          )
+                        ],
                       ),
                     ),
                     Devider(
@@ -379,16 +413,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.grey.shade300,
+                                fillColor: Colors.grey.shade200,
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8))),
                                 hintText: 'Select Hour'),
                             value: provider.selectedHour,
                             onChanged: (newValue) {
-                              setState(() {
-                                provider.selectedHour = newValue!;
-                              });
+                              provider.selectedHour = newValue!;
                             },
                             items: provider.hours.map((hour) {
                               return DropdownMenuItem<String>(
@@ -408,9 +440,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: DropdownButtonFormField<String>(
                               value: provider.selectedMinuts,
                               onChanged: (newValue) {
-                                setState(() {
-                                  provider.selectedMinuts = newValue!;
-                                });
+                                provider.selectedMinuts = newValue!;
                               },
                               items: provider.minutes.map((minut) {
                                 return DropdownMenuItem<String>(
@@ -423,7 +453,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               }).toList(),
                               decoration: InputDecoration(
                                   filled: true,
-                                  fillColor: Colors.grey.shade300,
+                                  fillColor: Colors.grey.shade200,
                                   border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
@@ -440,7 +470,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ? Circular_Loading_indicator()
                           : PrimaryButton(
                               label: 'Save',
-                              onPressed: provider.createUser,
+                              onPressed: provider.createPatient,
                             );
                     }),
                   ],

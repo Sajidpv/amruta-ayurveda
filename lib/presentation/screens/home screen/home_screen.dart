@@ -16,6 +16,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
 
+    List<String> options = ['All', 'Today', "Last Week", 'Last Month'];
+    String? selectedValue = options[0];
     return Scaffold(
       appBar: AppBar(
         actions: [bellIconWithBadge(homeProvider: homeProvider)],
@@ -77,12 +79,41 @@ class HomePage extends StatelessWidget {
                               height: 35,
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Sort by: ',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                  height: 50,
+                                  child: DropdownButtonFormField<String>(
+                                    hint: Text('Date'),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                    ),
+                                    value: selectedValue,
+                                    style: TextStyle(fontSize: 12),
+                                    items: options.map((String option) {
+                                      return DropdownMenuItem<String>(
+                                        value: option,
+                                        child: Text(
+                                          option,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? value) {
+                                      homeProvider.sortData(value!);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),

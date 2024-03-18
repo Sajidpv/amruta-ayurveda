@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:amruta_ayurveda/data/models/branch_model.dart';
 import 'package:amruta_ayurveda/data/models/patient_model.dart';
 import 'package:amruta_ayurveda/data/models/treatment_model.dart';
 import 'package:amruta_ayurveda/data/repository/user_repository.dart';
@@ -7,6 +6,30 @@ import 'package:amruta_ayurveda/presentation/screens/splash%20screen/splash_scre
 import 'package:http/http.dart' as http;
 
 class HomeRepository {
+  Future<List<Patient>> registerPatients(eData) async {
+    try {
+      var response = await http.post(
+        Uri.parse(baseUrl + 'PatientUpdate'),
+        body: eData,
+        headers: {
+          'Authorization': 'Bearer ${pref.getString('token')}',
+        },
+      );
+      print('success');
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseBody = json.decode(response.body);
+        List<dynamic> patientList = responseBody['patient'];
+        print('success');
+        return patientList.map((json) => Patient.fromJson(json)).toList();
+      } else {
+        throw ('Failed to register');
+      }
+    } catch (e, stacktrace) {
+      print(stacktrace);
+      rethrow;
+    }
+  }
+
   Future<List<Patient>> getPatients() async {
     try {
       var response = await http.get(
@@ -49,7 +72,7 @@ class HomeRepository {
     }
   }
 
-  Future<List<Branchess>> getBranches() async {
+  Future<List<Branch>> getBranches() async {
     try {
       var response = await http.get(
         Uri.parse(baseUrl + 'BranchList'),
@@ -62,7 +85,7 @@ class HomeRepository {
         Map<String, dynamic> responseBody = json.decode(response.body);
         print(responseBody);
         List<dynamic> branches = responseBody['branches'];
-        return branches.map((json) => Branchess.fromJson(json)).toList();
+        return branches.map((json) => Branch.fromJson(json)).toList();
       } else {
         throw ('Failed to load');
       }
